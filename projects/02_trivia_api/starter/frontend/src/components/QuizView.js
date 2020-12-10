@@ -2,17 +2,18 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 
 import '../stylesheets/QuizView.css';
+import {api} from "../config/api";
 
 const questionsPerPlay = 5; 
 
 class QuizView extends Component {
   constructor(props){
-    super();
+    super(props);
     this.state = {
         quizCategory: null,
         previousQuestions: [], 
         showAnswer: false,
-        categories: {},
+        categories: [],
         numCorrect: 0,
         currentQuestion: {},
         guess: '',
@@ -22,7 +23,7 @@ class QuizView extends Component {
 
   componentDidMount(){
     $.ajax({
-      url: `/categories`, //TODO: update request URL
+      url: `${api.baseUrl}/categories`,
       type: "GET",
       success: (result) => {
         this.setState({ categories: result.categories })
@@ -48,7 +49,7 @@ class QuizView extends Component {
     if(this.state.currentQuestion.id) { previousQuestions.push(this.state.currentQuestion.id) }
 
     $.ajax({
-      url: '/quizzes', //TODO: update request URL
+      url: `${api.baseUrl}/quizzes`,
       type: "POST",
       dataType: 'json',
       contentType: 'application/json',
@@ -66,7 +67,7 @@ class QuizView extends Component {
           previousQuestions: previousQuestions,
           currentQuestion: result.question,
           guess: '',
-          forceEnd: result.question ? false : true
+          forceEnd: !result.question
         })
         return;
       },
@@ -105,14 +106,11 @@ class QuizView extends Component {
               <div className="choose-header">Choose Category</div>
               <div className="category-holder">
                   <div className="play-category" onClick={this.selectCategory}>ALL</div>
-                  {Object.keys(this.state.categories).map(id => {
+                  {this.state.categories.map(({id, type}) => {
                   return (
-                    <div
-                      key={id}
-                      value={id}
-                      className="play-category"
-                      onClick={() => this.selectCategory({type:this.state.categories[id], id})}>
-                      {this.state.categories[id]}
+                    <div key={id} value={id} className="play-category"
+                      onClick={() => this.selectCategory({type:type, id})}>
+                      {type}
                     </div>
                   )
                 })}
