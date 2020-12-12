@@ -23,7 +23,6 @@ class QuestionView extends Component {
     }
 
     getQuestions = () => {
-        debugger;
         $.ajax({
             url: `${api.baseUrl}/questions?page=${this.state.page}`,
             type: "GET",
@@ -64,7 +63,6 @@ class QuestionView extends Component {
     }
 
     getByCategory = (id) => {
-        debugger;
         $.ajax({
             url: `${api.baseUrl}/categories/${id}/questions`,
             type: "GET",
@@ -95,7 +93,6 @@ class QuestionView extends Component {
             },
             crossDomain: true,
             success: (result) => {
-                debugger;
                 this.setState({
                     questions: result.questions,
                     totalQuestions: result.total_questions,
