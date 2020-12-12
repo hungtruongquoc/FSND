@@ -98,3 +98,36 @@ createdb trivia_test
 psql trivia_test < trivia.psql
 python test_flaskr.py
 ```
+
+# API Reference
+
+## Getting Started
+
+* Base URL: Currently the app can only run locally. The backend app is hosted at ``http://127.0.0.1:5000/api``
+* Authentication: no authentication required
+
+## Error Handling
+
+Errors are returned in JSON format:
+
+    {
+        "success": False,
+        "error": <error_code>,
+        "message": <error_message>
+    }
+
+Currently, the application returns following errors:
+* 404: Not found
+* 422: The request cannot be processed
+* 500: Internal error
+
+## End Points
+
+[GET /questions](#get-questions)
+
+# Deployment N/A
+
+# Authors
+Hung Truong
+
+# Acknowledgement N/A
