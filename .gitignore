@@ -12,3 +12,4 @@ venv
 ehthumbs.db
 Thumbs.db
 .idea
+/projects/03_coffee_shop_full_stack/starter_code/backend/src/database/database.db
