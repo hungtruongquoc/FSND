@@ -276,8 +276,10 @@ def create_a_drink(payload):
 def patch_a_drink(payload, drink_id):
     try:
         drink = Drink.query.filter_by(id=drink_id).first()
-        drink.title = request.json['title']
-        drink.recipe = json.dumps(request.json['recipe'])
+        if 'title' in request.json:
+            drink.title = request.json['title']
+        if 'recipe' in request.json:
+            drink.recipe = json.dumps(request.json['recipe'])
         drink.update()
 
         return jsonify({
